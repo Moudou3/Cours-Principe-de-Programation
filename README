@@ -1,0 +1,124 @@
+WEB SERVICES SOAP EN JAVA (JAX-WS)
+
+Ce projet présente une introduction aux Web Services SOAP en Java à l’aide de JAX-WS
+et JAXB. Il explique comment créer, publier, tester et personnaliser un service web SOAP.
+
+--------------------------------------------------
+OBJECTIFS DU PROJET
+--------------------------------------------------
+- Comprendre le principe des Web Services SOAP
+- Transformer une classe Java en service web
+- Publier un service web localement
+- Tester un service SOAP avec SOAPUI
+- Comprendre la sérialisation et la désérialisation XML
+
+--------------------------------------------------
+TECHNOLOGIES UTILISÉES
+--------------------------------------------------
+- Java
+- JAX-WS (Java API for XML Web Services)
+- JAXB (Java Architecture for XML Binding)
+- SOAP
+- WSDL
+- SOAPUI
+
+--------------------------------------------------
+CONCEPTS CLÉS
+--------------------------------------------------
+
+JAX-WS :
+JAX-WS permet de créer des services web SOAP en Java grâce à des annotations.
+Il facilite la communication entre applications, quel que soit le langage utilisé.
+
+JAXB :
+JAXB permet :
+- la sérialisation : conversion d’un objet Java en XML
+- la désérialisation : conversion d’un document XML en objet Java
+
+--------------------------------------------------
+CRÉATION D’UN SERVICE WEB
+--------------------------------------------------
+Pour transformer une classe Java en service web SOAP, on utilise l’annotation :
+
+@WebService(targetNamespace = "http://www.sorbonne.fr")
+
+Le targetNamespace représente l’espace de nommage du service, généralement l’URL
+de l’organisation.
+
+--------------------------------------------------
+PUBLICATION DU SERVICE (SERVEUR)
+--------------------------------------------------
+Pour publier le service web localement :
+
+- Définir l’URL du serveur :
+  http://localhost:8888/
+
+- Publier le service avec la classe Endpoint :
+  Endpoint.publish(url, new MonServiceWeb());
+
+Cette étape rend le service accessible aux clients.
+
+--------------------------------------------------
+ACCÈS AU WSDL
+--------------------------------------------------
+Le WSDL (Web Services Description Language) décrit le service (méthodes, paramètres,
+types de données).
+
+Il est accessible à l’adresse :
+http://localhost:8888/?wsdl
+
+--------------------------------------------------
+TEST DU SERVICE AVEC SOAPUI
+--------------------------------------------------
+Étapes :
+1. Ouvrir SOAPUI
+2. Créer un nouveau projet
+3. Fournir l’URL du WSDL
+4. Générer automatiquement les requêtes
+5. Tester les méthodes via des requêtes XML
+
+Les échanges sont toujours réalisés en XML, indépendamment du langage du client.
+
+--------------------------------------------------
+MISE À JOUR DU SERVICE
+--------------------------------------------------
+- Toute modification (ajout de méthode) nécessite un redémarrage du service
+- Le WSDL est automatiquement régénéré
+- Le WSDL est stocké dans un registre Java (JNDI)
+
+--------------------------------------------------
+PERSONNALISATION DES MÉTHODES
+--------------------------------------------------
+
+Nom des paramètres XML :
+Par défaut, les paramètres sont nommés arg0, arg1, etc.
+Pour les renommer, on utilise @WebParam.
+
+Nom de l’opération SOAP :
+Pour personnaliser le nom d’une méthode exposée, on utilise @WebMethod.
+
+--------------------------------------------------
+SÉRIALISATION DES CLASSES
+--------------------------------------------------
+Pour rendre une classe sérialisable et désérialisable en XML, on ajoute :
+
+@XmlRootElement
+
+Cette annotation permet à JAXB de reconnaître la classe comme élément racine XML.
+
+--------------------------------------------------
+CONCLUSION
+--------------------------------------------------
+Les Web Services SOAP en Java reposent sur :
+- JAX-WS pour exposer les services
+- JAXB pour la transformation Java ↔ XML
+- WSDL pour la description du service
+- SOAPUI pour les tests
+
+Ils permettent une communication standardisée, fiable et interopérable.
+
+--------------------------------------------------
+AUTEUR
+--------------------------------------------------
+Mamoudou
+Master Informatique / Data Science
