@@ -1,124 +1,127 @@
-WEB SERVICES SOAP EN JAVA (JAX-WS)
+# Cours de Principe de Programmation
 
-Ce projet présente une introduction aux Web Services SOAP en Java à l’aide de JAX-WS
-et JAXB. Il explique comment créer, publier, tester et personnaliser un service web SOAP.
+## Présentation générale
 
---------------------------------------------------
-OBJECTIFS DU PROJET
---------------------------------------------------
-- Comprendre le principe des Web Services SOAP
-- Transformer une classe Java en service web
-- Publier un service web localement
-- Tester un service SOAP avec SOAPUI
-- Comprendre la sérialisation et la désérialisation XML
+Ce dépôt contient l’ensemble des supports de cours et travaux pratiques liés aux notions fondamentales de programmation et d’informatique, notamment :
 
---------------------------------------------------
-TECHNOLOGIES UTILISÉES
---------------------------------------------------
-- Java
-- JAX-WS (Java API for XML Web Services)
-- JAXB (Java Architecture for XML Binding)
-- SOAP
-- WSDL
-- SOAPUI
+* Web Services SOAP en Java (JAX-WS)
+* Introduction à Docker et aux conteneurs
+* Notions de déploiement et d’architecture logicielle
 
---------------------------------------------------
-CONCEPTS CLÉS
---------------------------------------------------
+L’objectif est de fournir une base solide pour comprendre les technologies modernes utilisées en développement logiciel et en architecture distribuée.
 
-JAX-WS :
-JAX-WS permet de créer des services web SOAP en Java grâce à des annotations.
-Il facilite la communication entre applications, quel que soit le langage utilisé.
+---
 
-JAXB :
-JAXB permet :
-- la sérialisation : conversion d’un objet Java en XML
-- la désérialisation : conversion d’un document XML en objet Java
+## Structure du projet
 
---------------------------------------------------
-CRÉATION D’UN SERVICE WEB
---------------------------------------------------
-Pour transformer une classe Java en service web SOAP, on utilise l’annotation :
+```
+Cours-Principe-de-Programation/
+│
+├── SOAP-JAXWS/          # Web services SOAP en Java
+├── Docker/              # Cours et TP Docker
+├── README.md            # Documentation principale
+```
 
-@WebService(targetNamespace = "http://www.sorbonne.fr")
+---
 
-Le targetNamespace représente l’espace de nommage du service, généralement l’URL
-de l’organisation.
+## Web Services SOAP (JAX-WS)
 
---------------------------------------------------
-PUBLICATION DU SERVICE (SERVEUR)
---------------------------------------------------
-Pour publier le service web localement :
+### Objectif
 
-- Définir l’URL du serveur :
-  http://localhost:8888/
+Comprendre la création et l’utilisation de services web SOAP en Java.
 
-- Publier le service avec la classe Endpoint :
-  Endpoint.publish(url, new MonServiceWeb());
+### Technologies utilisées
 
-Cette étape rend le service accessible aux clients.
+* Java
+* JAX-WS
+* JAXB
+* SOAP
+* WSDL
+* SOAPUI
 
---------------------------------------------------
-ACCÈS AU WSDL
---------------------------------------------------
-Le WSDL (Web Services Description Language) décrit le service (méthodes, paramètres,
-types de données).
+### Concepts abordés
 
-Il est accessible à l’adresse :
-http://localhost:8888/?wsdl
+* Création d’un service web avec @WebService
+* Publication locale avec Endpoint.publish
+* Génération et utilisation du WSDL
+* Tests avec SOAPUI
+* Sérialisation XML avec JAXB
 
---------------------------------------------------
-TEST DU SERVICE AVEC SOAPUI
---------------------------------------------------
-Étapes :
-1. Ouvrir SOAPUI
-2. Créer un nouveau projet
-3. Fournir l’URL du WSDL
-4. Générer automatiquement les requêtes
-5. Tester les méthodes via des requêtes XML
+### Résumé
 
-Les échanges sont toujours réalisés en XML, indépendamment du langage du client.
+Les Web Services SOAP permettent une communication standardisée entre applications, indépendamment du langage utilisé.
 
---------------------------------------------------
-MISE À JOUR DU SERVICE
---------------------------------------------------
-- Toute modification (ajout de méthode) nécessite un redémarrage du service
-- Le WSDL est automatiquement régénéré
-- Le WSDL est stocké dans un registre Java (JNDI)
+---
 
---------------------------------------------------
-PERSONNALISATION DES MÉTHODES
---------------------------------------------------
+## Docker et conteneurs
 
-Nom des paramètres XML :
-Par défaut, les paramètres sont nommés arg0, arg1, etc.
-Pour les renommer, on utilise @WebParam.
+### Objectif
 
-Nom de l’opération SOAP :
-Pour personnaliser le nom d’une méthode exposée, on utilise @WebMethod.
+Comprendre la conteneurisation et la gestion d’applications isolées.
 
---------------------------------------------------
-SÉRIALISATION DES CLASSES
---------------------------------------------------
-Pour rendre une classe sérialisable et désérialisable en XML, on ajoute :
+### Concepts abordés
 
-@XmlRootElement
+* Images et conteneurs
+* Volumes (persistance des données)
+* Réseaux Docker
+* Exécution d’applications isolées
 
-Cette annotation permet à JAXB de reconnaître la classe comme élément racine XML.
+### Commandes principales
 
---------------------------------------------------
-CONCLUSION
---------------------------------------------------
-Les Web Services SOAP en Java reposent sur :
-- JAX-WS pour exposer les services
-- JAXB pour la transformation Java ↔ XML
-- WSDL pour la description du service
-- SOAPUI pour les tests
+* docker run
+* docker ps
+* docker exec
+* docker volume
+* docker network
 
-Ils permettent une communication standardisée, fiable et interopérable.
+### Résumé
 
---------------------------------------------------
-AUTEUR
---------------------------------------------------
+Docker permet de déployer des applications de manière portable, rapide et isolée dans différents environnements.
+
+---
+
+## Objectifs pédagogiques du projet
+
+* Comprendre les architectures distribuées
+* Maîtriser les services web SOAP
+* Manipuler des environnements conteneurisés
+* Acquérir les bases du DevOps
+* Préparer aux environnements cloud
+
+---
+
+## Prérequis
+
+* Connaissances de base en Java
+* Notions de programmation orientée objet
+* Compréhension de base du terminal
+
+---
+
+## Utilisation du dépôt
+
+### Cloner le projet
+
+```bash
+git clone https://github.com/Moudou3/Cours-Principe-de-Programation.git
+```
+
+### Ouvrir dans VS Code
+
+```bash
+cd Cours-Principe-de-Programation
+code .
+```
+
+---
+
+## Auteur
+
 Mamoudou
 Master Informatique / Data Science
+
+---
+
+## Licence
+
+Ce projet est destiné à un usage pédagogique et académique.
