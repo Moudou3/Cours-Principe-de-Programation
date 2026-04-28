@@ -1,0 +1,146 @@
+DOCKER & CONTENEURS (INTRODUCTION PRATIQUE)
+Ce document présente les notions essentielles de Docker et la gestion des conteneurs à travers des commandes de base et des exemples pratiques.
+OBJECTIFS DU COURS
+Comprendre les conteneurs et leur intérêt
+Maîtriser les commandes Docker de base
+Gérer les images et conteneurs
+Comprendre les volumes (persistance des données)
+Manipuler les réseaux Docker
+Exécuter des applications dans des environnements isolés
+CONCEPTS CLÉS
+CONTENEUR :
+Un conteneur est un environnement isolé qui exécute une application avec toutes ses dépendances.
+IMAGE :
+Une image est un modèle immuable utilisé pour créer des conteneurs.
+DOCKER :
+Docker est une plateforme permettant de créer, exécuter et gérer des conteneurs.
+AVANTAGES DES CONTENEURS
+PORTABILITÉ :
+Une application fonctionne de la même manière sur n’importe quelle machine.
+ISOLATION :
+Chaque conteneur possède ses propres ressources indépendantes.
+DÉMARRAGE RAPIDE :
+Un conteneur se lance beaucoup plus vite qu’une machine virtuelle.
+AUTOMATISATION :
+Possibilité de créer des pipelines de déploiement automatiques (CI/CD).
+COÛT RÉDUIT :
+Moins de ressources consommées par rapport aux VM.
+COMPATIBILITÉ CLOUD :
+Les conteneurs fonctionnent facilement sur les environnements cloud.
+COMMANDES DOCKER DE BASE
+LANCER UN CONTENEUR
+docker run sert à créer et exécuter un conteneur à partir d’une image.
+Exemple :
+docker run -it alpine:latest /bin/sh
+Explication :
+Vérifie si l’image existe
+Sinon, elle est téléchargée
+Crée un conteneur isolé basé sur Alpine
+-i : mode interactif
+-t : terminal lisible
+INSTALLER UN PACKAGE DANS ALPINE
+apk add --no-cache curl
+apk : gestionnaire de paquets Alpine
+add : installer un logiciel
+curl : outil HTTP
+--no-cache : pas de stockage temporaire (gain d’espace)
+CRÉER UN FICHIER
+echo "Bonjour sup.galilé" > /hello.txt
+echo : affiche du texte
+: redirige vers un fichier
+crée /hello.txt
+GESTION DES CONTENEURS
+docker ps
+→ liste les conteneurs actifs
+docker ps -a
+→ liste tous les conteneurs (actifs + arrêtés)
+EXPORT / IMPORT
+docker export c39cab7f2125 > sauvegarde.tar
+→ sauvegarde un conteneur en fichier
+docker import sauvegarde.tar mon_image
+→ recrée une image depuis une archive
+SUPPRESSION
+docker rm <conteneur>
+→ supprimer un conteneur
+docker rmi <image>
+→ supprimer une image
+NGINX (SERVEUR WEB)
+docker run -d -p 8080:80 --name mon_conteneur nginx
+Explication :
+-d : arrière-plan
+-p 8080:80 : mapping ports (PC → conteneur)
+nginx : serveur web
+Accès :
+http://localhost:8080
+Fichier web :
+cd /usr/share/nginx/html
+Modifier :
+echo "Hello from Docker" > index.html
+EXECUTION DANS UN CONTENEUR
+docker exec -it mon_conteneur bash
+exécute une commande dans un conteneur actif
+ouvre un terminal
+VOLUMES (PERSISTANCE DES DONNÉES)
+CRÉER UN VOLUME :
+docker volume create monvolume
+UTILISER UN VOLUME :
+docker run -v monvolume:/data image
+INSPECTER :
+docker volume inspect monvolume
+SUPPRIMER :
+docker volume rm monvolume
+EXEMPLE PERSISTANCE
+docker create -it --name c1 -v monvolume:/data alpine sh
+docker start -ai c1
+echo "Bonjour binome" > /data/message.txt
+→ Les données restent même après suppression du conteneur
+MONTAGE DOSSIER LOCAL
+docker run -it -v "D:\USPN\Principe de programmation":/data alpine sh
+→ relie un dossier Windows au conteneur
+MYSQL AVEC VOLUME
+docker run -d
+--name mysql
+-e MYSQL_ROOT_PASSWORD=pass
+-v mysql_data:/var/lib/mysql
+mysql:8
+Explication :
+base MySQL
+mot de passe root
+stockage persistant
+POSTGRESQL AVEC VOLUME
+docker run -d --name postgres1
+-e POSTGRES_PASSWORD=pass
+-v pg_data:/var/lib/postgresql/data
+postgres
+RÉSEAU DOCKER
+CRÉER UN RÉSEAU :
+docker network create monreseau
+LANCER CONTENEURS SUR LE RÉSEAU :
+docker run -d --name site --network monreseau nginx
+TEST CONNECTIVITÉ :
+docker exec -it apk sh
+ping site
+MODES RÉSEAU
+BRIDGE :
+réseau par défaut Docker
+HOST :
+pas d’isolation réseau (Linux uniquement)
+NONE :
+aucun réseau (pas internet)
+EXEMPLES RÉSEAU
+Sans réseau :
+docker run --network none -it alpine sh
+Avec réseau partagé :
+docker run -d --name site --network monreseau nginx
+docker run -d --name apk --network monreseau alpine sleep 1000
+CONCLUSION
+Docker permet :
+l’exécution d’applications isolées
+la portabilité sur différents environnements
+la gestion efficace des ressources
+la persistance des données via volumes
+la communication entre services via réseaux
+C’est un outil essentiel pour le développement moderne, le DevOps et le cloud computing.
+AUTEUR
+Mamoudou
+Master Informatique / Data Science
