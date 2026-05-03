@@ -1,0 +1,88 @@
+Docker propose 3 types principaux :
+A.Bind mounts (montages liés)
+Ils relient un dossier de l'hôte à un dossier dans le conteneur.
+On voit les fichiers en temps réel.
+Dépend du système de fichiers hôte.
+Risque de sécurité si mal configuré.
+docker run -v source:destination image
+source est un chemin de la machine hôte
+destination se trouve dans le conteneur
+
+B..Volumes gérés par Docker
+Ce sont les volumes recommandés.
+Stockés dans /var/lib/docker/volumes/
+Indépendants du système hôte.
+Plus sûrs et facilement sauvegardables.
+docker volume create monvolume
+docker run -v monvolume:/chemin/image
+
+C.tmpfs (mémoire uniquement -Linux)
+Stockage temporaire uniquement en RAM
+Rapidité
+Aucune trace sur le disque
+Données perdues au redémarrage
+docker run -tmpfs /chemin image
+
+docker volume ls : Liste les volumes
+docker volume inspect monvolume : Affiche un json contenant des informations sur monvolume
+docker volume rm monvolume : : Efface monvolume
+
+docker run -it -v monvolume:/data alpine sh
+Faites echo "hello" > /data/test.txt
+Puis docker rm -f id_du_conteneur
+Puis docker run -it -v monvolume:/data alpine sh
+Vous verrez que test.txt existe toujours.
+
+Partie Bind mounts : Monter un dossier de l'hôte
+docker run -it -v /home/user/projets:/app alpin sh
+Tout changement dans /home/user/projets se reflète dans /app
+Exemple concret : Faire persister une base de données SQL
+docker volume create mysql_data
+docker run -d-name mysql -e MYSQL_ROOT_PASSWORD=pass-b mysql_data:/var/lib/mysql mysqsl:8
+Reste à : Créer la base de données et y insérer les données
+          Arrêter le conteneur et exécuter un autre conteneur en partageant les données.
+          Vérifier que les données sont bien accessibles.
+
+Faire la même chose avec PostGreSQL
+
+Dockerfile par l'exemple
+Qu'est ce qu'un Dockerfile? Un Dockerfile sert à automatiser la création d'images Docker
+Sans Dockerfile, on doit configurer son conteneur à la main (installer des paquets, copier des fichiers...)
+Avec un Dockerfile, Docker fait tout ça automatiquement dans une image réutilisable.
+
+Structure générale d'un DockerFile
+Instruction          Rôle
+FROM                 Choisir l'image de base
+RUN                  Exécuter une commande dans l'image
+COPY                 Copier un fichier ou dossier local dans l'image
+WORKDIR              Définir le dossier de travail
+EXPOSE               Documenter le port exposé
+CMD/ENTRYPOINT       Commande lancée au démarrage
+
+Créer une image à partir d'une API REST : 
+Étape 1 : Créer un Dockerfile dans votre projet Intellij. Il faut qu'il soit au même niveau que le dossier src.
+Étape 2 : Effacez toutes les instructions s'y trouvant et tapez celle-ci :
+FROM python:3.12-slim : On utilise un image Python officielle
+WORKDIR /app : On définit le répertoire de travail
+RUN pip install flask : On installe Flask
+COPY app.py . : On copie le fichier
+EXPOSE 5000 : On documente le port utilisé
+CMD ["python", "app.py"] : On définit la commande qui démarre l'application
+
+Ensuite on fait "docker build -t mon-app ." et "docker run -p 4900:5000" dans le terminal d'Intellij
+
+>docker login
+>docker tag mon_apy username/mon_aapp:1
+>docker push username/mon_app:1
+
+Comment poster son image Docker?
+Allez sur Docker Hub.
+Puis sur terminal :
+docker login
+docker tag mon_app votre_username/mon_app
+docker push votre_username/mon_app:1
+
+Docker Compose :
+On peut avoir besoin de plusieurs services, par exemple un service php qui aurait besoin d'une API Rest.
+Voir les photos.
+Il faut mettre <M1> sinon il efface étudiants.
